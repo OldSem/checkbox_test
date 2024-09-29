@@ -36,6 +36,7 @@ def test_users(db: Session) -> None:
 
 def test_registration(db: Session):
     response = user_create()
+    print(response.text)
     user_delete(db, int(response.json()["id"]))
     assert response.status_code == 201
     assert response.json()["username"] == "testuser"

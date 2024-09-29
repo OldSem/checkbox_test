@@ -43,7 +43,7 @@ Variables:
 ```
 Test
 ```
-pytest
+make test
 
 ```
 

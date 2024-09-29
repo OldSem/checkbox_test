@@ -24,17 +24,7 @@ def auth_token(db):
         user_delete(db, int(user_response.json()["id"]))
 
 
-def receipt_delete(db: Session, instance_id: int):
-    instance = db.query(Receipt).filter(Receipt.id == instance_id).first()
-    for sub_instance in instance.products:
-        db.delete(sub_instance)
-    db.delete(instance)
-    db.commit()
-    reset_sequence(sub_instance.__class__.__tablename__, db)
-    reset_sequence(instance.__class__.__tablename__, db)
-
-
-def test_create_receipt(auth_token, db):
+def receipt_create(auth_token):
     headers = {
         "Authorization": f"Bearer {auth_token}"
     }
@@ -51,6 +41,22 @@ def test_create_receipt(auth_token, db):
             "amount": 21.0
         }
     }, headers=headers)
+    return response
+
+
+def receipt_delete(db: Session, instance_id: int):
+    instance = db.query(Receipt).filter(Receipt.id == instance_id).first()
+    for sub_instance in instance.products:
+        db.delete(sub_instance)
+    db.delete(instance)
+    db.commit()
+    reset_sequence(sub_instance.__class__.__tablename__, db)
+    reset_sequence(instance.__class__.__tablename__, db)
+
+
+def test_create_receipt(auth_token, db):
+    response = receipt_create(auth_token)
+    print(response.json(), response.text)
     receipt_delete(db, int(response.json()["id"]))
     assert response.status_code == 201
     assert response.json()["total"] == '21.00'
@@ -65,8 +71,9 @@ def test_get_receipts(auth_token, db):
     assert len(response.json()) <= 5
 
 
-def test_get_receipt_public(db):
-    receipt_id = 1  # Example id
+def test_get_receipt_public(db, auth_token):
+    response = receipt_create(auth_token)
+    receipt_id = response.json().get('id')  # Example id
     response = client.get(f"/receipts/{receipt_id}/show/")
     assert response.status_code == 200
     # assert "total" in response.json()
