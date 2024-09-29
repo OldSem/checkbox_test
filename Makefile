@@ -19,3 +19,6 @@ env_load:
 
 migrations:
 	docker exec checkbox_fast_api alembic revision --autogenerate -m "Name migration"
+
+test:
+	docker exec  -it  checkbox_fast_api pytest

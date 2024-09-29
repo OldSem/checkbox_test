@@ -1,12 +1,12 @@
 import pytest
+import os
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from config.database import Base
 from auth.models import User
 from receipt.models import Receipt, ProductReceipt, Product
 
 # Тестовий engine
-TEST_DATABASE_URL = 'postgresql://user:password@localhost/checkbox'
+TEST_DATABASE_URL = os.environ.get('LOCAL_DB')
 engine = create_engine(TEST_DATABASE_URL)
 
 # Тестова сесія
