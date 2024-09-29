@@ -1,0 +1,7 @@
+{{ item.product.name | wordwrap(max_length, wrapstring="\n") }}{{' ' * (max_length - item.product.name | length - item.total | length)}}{{ item.total }}<br>
+{{ '=' * max_length }}
+СУМА{{' ' * 'СУМА' | lenght + }}{{item.total}}
+{{}}{{}}{{item.amount}}
+Решта{{}}{{item.rest}}
+{{ '=' * max_length }}
+Дякуємо за покупку!

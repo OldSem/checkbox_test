@@ -1,0 +1,22 @@
+<div>
+  <pre>
+
+{{company | center(max_length)}}
+{{ '=' * max_length }}
+{% for item in receipt.products %}
+{{ item.quantity }} x {{ item.price }}
+{{ item.product.name | wrap_expand(item.total, max_length) }}
+    {% if not loop.last %}
+{{ '-' * max_length }}
+    {% endif %}
+{% endfor %}
+{{ '=' * max_length }}
+{{'СУМА' | wrap_expand(receipt.total, max_length)}}
+{{receipt.payment_type | wrap_expand(receipt.amount, max_length)}}
+{{'Решта' | wrap_expand(receipt.rest, max_length)}}
+{{ '=' * max_length }}
+{{receipt.created_at | strftime('%d.%m.%Y %H:%M')| center(max_length)}}
+{{'Дякуємо за покупку!' | center(max_length)}}
+
+    </pre>
+</div>

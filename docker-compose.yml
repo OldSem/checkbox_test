@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  local_db:
+    env_file:
+      - config/docker/.env
+    image: postgres:latest
+    container_name: checkbox_postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init_db.sh:/docker-entrypoint-initdb.d/init_db.sh
+
+  web:
+    container_name: checkbox_fast_api
+
+    build: .
+
+    image: fastapi_checkbox:latest
+
+    volumes:
+      - .:/app
+    expose:
+      - "8000"
+
+    ports:
+      - "8000:8000"
+
+    depends_on:
+      - local_db
+    env_file:
+      - config/docker/.env
+
+volumes:
+  postgres_data:

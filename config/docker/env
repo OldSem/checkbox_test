@@ -1,0 +1,5 @@
+POSTGRES_USER=user
+POSTGRES_PASSWORD=password
+POSTGRES_DB=checkbox
+
+LOCAL_DB=postgresql://user:password@local_db/checkbox
