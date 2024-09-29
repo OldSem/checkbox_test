@@ -7,8 +7,8 @@ Project
 Clone this repository:
 
 ```
-git clone https://github.com/OldSem/THE_ORIGINALS_TEST.git
-cd THE_ORIGINALS_TEST
+git clone https://github.com/OldSem/checkbox_test.git
+cd checkbox_test
 ```
 Create .env file
 ```
